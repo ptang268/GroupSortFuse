@@ -16,6 +16,8 @@ double thetaDist(const VectorXd& theta1, const VectorXd& theta2) {
 
 // Generates the symmetrix matrix (with 0 diagonal) of pairwise distances between the columns of theta.
 MatrixXd getDistanceMatrix(const MatrixXd& theta) {
+  K = theta.cols();  // Number of mixture components. 
+  
   MatrixXd distances(K, K);
 
   for (int k = 0; k < K; k++) {
@@ -40,6 +42,8 @@ bool find(std::vector<int> sigma, int j) {
 
 // Generates the permutation alpha.
 void alpha(const MatrixXd& theta, std::vector<int>& perm) {
+  K = theta.cols();  // Number of mixture components. 
+
   MatrixXd distances = getDistanceMatrix(theta);
 
    std::vector<int> sigma, tau;
@@ -108,6 +112,9 @@ void alpha(const MatrixXd& theta, std::vector<int>& perm) {
 
  // Reorders the columns of theta with respect to the permutation alpha.
  MatrixXd reorderTheta(const MatrixXd& theta) {
+   K = theta.cols();  // Number of mixture components. 
+   D = theta.rows();  // Dimension of the parameter space.
+
    MatrixXd result(D, K);
    std::vector<int> perm(K);
 
@@ -151,6 +158,9 @@ bool linSearch(const MatrixXd& target, const MatrixXd& list) {
 }
 
 int frequency(const MatrixXd& theta) {
+  K = theta.cols();  // Number of mixture components. 
+  D = theta.rows();  // Dimension of the parameter space.
+  
 	MatrixXd uniqueThetas;
 	MatrixXd currentTheta(D, 1);
 
